@@ -12,7 +12,9 @@ export const UserProvider = ({ children }) => {
   }, [user])
 
   return (
-    <UserContext.Provider value={{loginWithRedirect, logout, myUser}}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{loginWithRedirect, logout, myUser}}>
+      {children}
+    </UserContext.Provider>
   )
 }
 // make sure use

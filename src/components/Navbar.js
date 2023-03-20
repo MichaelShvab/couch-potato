@@ -1,47 +1,49 @@
-import React from 'react'
-import styled from 'styled-components'
-import logo from '../assets/logo.svg'
-import { FaBars } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import { links } from '../utils/constants'
-import CartButtons from './CartButtons'
-import { useProductsContext } from '../context/products_context'
-import { useUserContext } from '../context/user_context'
+import React from "react";
+import styled from "styled-components";
+import logo from "../assets/logo.svg";
+import { FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { links } from "../utils/constants";
+import CartButtons from "./CartButtons";
+import { useProductsContext } from "../context/products_context";
+import { useUserContext } from "../context/user_context";
 
 const Nav = () => {
-  const { openSidebar } = useProductsContext()
-  const {myUser} = useUserContext()
+  const { openSidebar } = useProductsContext();
+  const { myUser } = useUserContext();
 
   return (
-  <NavContainer>
-    <div className="nav-center">
-      <div className="nav-header">
-        <Link to='/'>
-          <img src={logo} alt="comfy sloth" />
-        </Link>
-        <button type="button" className='nav-toggle' onClick={openSidebar}>
-          <FaBars />
-        </button>
-      </div>
-      <ul className="nav-links"> 
-        {links.map((link) => {
-        const {id, text, url} = link;
-        
-        return <li key={id}>
-          <Link to={url}>
-            {text}
+    <NavContainer>
+      <div className="nav-center">
+        <div className="nav-header">
+          <Link to="/">
+            <img src={logo} alt="couch potato" />
           </Link>
-        </li>
-        })}
-        {myUser && <li>
-          <Link to='/checkout'>checkout</Link>
-          </li>}
-      </ul>
-      <CartButtons />
-    </div>
-  </NavContainer>
-  )
-}
+          <button type="button" className="nav-toggle" onClick={openSidebar}>
+            <FaBars />
+          </button>
+        </div>
+        <ul className="nav-links">
+          {links.map((link) => {
+            const { id, text, url } = link;
+
+            return (
+              <li key={id}>
+                <Link to={url}>{text}</Link>
+              </li>
+            );
+          })}
+          {myUser && (
+            <li>
+              <Link to="/checkout">checkout</Link>
+            </li>
+          )}
+        </ul>
+        <CartButtons />
+      </div>
+    </NavContainer>
+  );
+};
 
 const NavContainer = styled.nav`
   height: 5rem;
@@ -100,7 +102,23 @@ const NavContainer = styled.nav`
         letter-spacing: var(--spacing);
         padding: 0.5rem;
         &:hover {
-          border-bottom: 2px solid var(--clr-primary-7);
+          position: relative;
+        }
+        &:after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          transform: scaleX(0);
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: var(--clr-primary-7);
+          transform-origin: bottom right;
+          transition: transform 0.25s ease-out;
+        }
+        &:hover::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
         }
       }
     }
@@ -108,6 +126,6 @@ const NavContainer = styled.nav`
       display: grid;
     }
   }
-`
+`;
 
-export default Nav
+export default Nav;
